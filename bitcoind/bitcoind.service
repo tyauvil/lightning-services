@@ -1,0 +1,14 @@
+[Unit]
+Description=Bitcoin daemon
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/default/bitcoin
+ExecStart=/usr/local/bin/bitcoind --printtoconsole -conf=/etc/bitcoin/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
+RuntimeDirectory=bitcoind
+User=bitcoin
+Restart=on-failure
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

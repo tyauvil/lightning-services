@@ -1,0 +1,17 @@
+[Unit]
+Description=eclair lightning network daemon
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/default/eclair
+WorkingDirectory=/data/eclair
+ExecStart=/usr/bin/java $JAVA_OPTS -jar /usr/local/bin/eclair-node.jar
+RuntimeDirectory=eclair
+User=eclair
+Restart=on-failure
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+
+JAVA_OPTS=-Xmx512m  -Declair.headless -Declair.printToConsole -Declair.datadir=/data/eclair

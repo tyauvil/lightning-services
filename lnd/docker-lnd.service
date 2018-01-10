@@ -1,0 +1,18 @@
+[Unit]
+Description=Lightning network daemon
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+Environment="DOCKER_IMAGE=tyauvil/lnd"
+Environment="DATA_VOLUME=/data"
+Environment="LND_OPTS=--configfile=/data/lnd.conf --datadir=/data --externalip=${COREOS_PUBLIC_IPV4}"
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ${DOCKER_IMAGE}
+ExecStart=/usr/bin/docker run --rm --name %n -v ${DATA_VOLUME}:/data ${DOCKER_IMAGE} ${LND_OPTS}
+
+[Install]
+WantedBy=multi-user.target
