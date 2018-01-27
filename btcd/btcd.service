@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 EnvironmentFile=/etc/default/btcd
-ExecStart=/usr/local/bin/btcd 
+ExecStart=/usr/local/bin/btcd ${BTCD_OPTS}
 RuntimeDirectory=btcd
 User=bitcoin
 Restart=always

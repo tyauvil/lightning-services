@@ -1,0 +1,14 @@
+[Unit]
+Description=lnd Lightning network daemon
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/default/lnd
+ExecStart=/usr/local/bin/lndd ${LND_OPTS}
+RuntimeDirectory=lnd
+User=bitcoin
+Restart=always
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
