@@ -7,7 +7,7 @@ EnvironmentFile=/etc/default/bitcoin
 ExecStart=/usr/local/bin/bitcoind --printtoconsole -conf=/etc/bitcoin/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
 RuntimeDirectory=bitcoind
 User=bitcoin
-Restart=on-failure
+Restart=always
 PrivateTmp=true
 
 [Install]

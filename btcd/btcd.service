@@ -1,0 +1,14 @@
+[Unit]
+Description=btcd Bitcoin daemon
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/default/btcd
+ExecStart=/usr/local/bin/btcd 
+RuntimeDirectory=btcd
+User=bitcoin
+Restart=always
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

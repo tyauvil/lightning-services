@@ -2,8 +2,12 @@ FROM golang:1.9 as BUILD
 
 MAINTAINER Ty Auvil <ty.auvil@gmail.com>
 
-# roasbeef fork that adds segwit
-RUN go get -u -v github.com/roasbeef/btcd/...
+WORKDIR /go/src/github.com/btcsuite/btcd
+
+RUN go get -u github.com/Masterminds/glide
+RUN git clone https://github.com/btcsuite/btcd /go/src/github.com/btcsuite/btcd
+RUN glide install
+RUN go install . ./cmd/...
 
 FROM debian:9-slim
 
