@@ -3,9 +3,10 @@ Description=eclair lightning network daemon
 After=network.target
 
 [Service]
+Environment="MAX_HEAP=512m"
 EnvironmentFile=/etc/default/eclair
 WorkingDirectory=/data/eclair
-ExecStart=/usr/bin/java $JAVA_OPTS -jar /usr/local/bin/eclair-node.jar
+ExecStart=/usr/bin/java ${JAVA_OPTS} -Xmx${MAX_HEAP} -jar /usr/local/bin/eclair-node.jar
 RuntimeDirectory=eclair
 User=eclair
 PrivateTmp=true
