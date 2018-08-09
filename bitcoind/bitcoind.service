@@ -6,9 +6,14 @@ After=network.target
 EnvironmentFile=/etc/default/bitcoin
 ExecStart=/usr/local/bin/bitcoind --printtoconsole -conf=/etc/bitcoin/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
 RuntimeDirectory=bitcoind
+PIDFile=/run/bitcoind/bitcoind.pid
 User=bitcoin
 Restart=always
 PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+PrivateDevices=true
+MemoryDenyWriteExecute=true
 
 [Install]
 WantedBy=multi-user.target
