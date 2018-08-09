@@ -1,0 +1,16 @@
+[Unit]
+Description=Dockerized Bitcoin network daemon
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+EnvironmentFile=/etc/default/btcd
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ${DOCKER_IMAGE}
+ExecStart=/usr/bin/docker run --rm --name %n -v ${DATA_VOLUME}:/data ${DOCKER_IMAGE} ${BTCD_OPTS}
+
+[Install]
+WantedBy=multi-user.target
