@@ -1,0 +1,20 @@
+[Unit]
+Description=Dockerized eclair network daemon
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+Environment="DOCKER_IMAGE=acinq/eclair"
+Environment="TAG=v0.2-beta5"
+Environment="DATA_VOLUME=/data"
+Environment="JAVA_OPTS=-Xmx512m"
+EnvironmentFile=/etc/default/eclair
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ${DOCKER_IMAGE}
+ExecStart=/usr/bin/docker run --rm --name %n -v ${DATA_VOLUME}:/data ---env JAVA_OPTS ${DOCKER_IMAGE}:${TAG} ${ECLAIR_OPTS}
+
+[Install]
+WantedBy=multi-user.target
