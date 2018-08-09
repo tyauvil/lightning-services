@@ -1,11 +1,13 @@
-FROM golang:1.9 as BUILD
+FROM golang:1.10 as BUILD
 
 MAINTAINER Ty Auvil <ty.auvil@gmail.com>
 
+ARG BRANCH=master
 WORKDIR /go/src/github.com/btcsuite/btcd
 
 RUN go get -u github.com/Masterminds/glide
 RUN git clone https://github.com/btcsuite/btcd /go/src/github.com/btcsuite/btcd
+RUN git checkout "$BRANCH"
 RUN glide install
 RUN go install . ./cmd/...
 
